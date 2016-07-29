@@ -11,6 +11,7 @@ export function searchReducer(
   switch (action.type) {
   case SearchActions.SEARCH_LOADING:
     return state.merge({
+      term: action.payload.term,
       results: [],
       hasError: false,
       isLoading: true,

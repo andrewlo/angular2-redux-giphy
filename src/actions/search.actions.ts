@@ -14,15 +14,17 @@ export class SearchActions {
   loading(term) {
     return {
       type: SearchActions.SEARCH_LOADING,
-      payload: term,
-    }
+      payload: {
+        term,
+      }
+    };
   }
 
   error(error) {
     return {
       type: SearchActions.SEARCH_ERROR,
       payload: error,
-    }
+    };
   }
 
   success(results) {
@@ -31,7 +33,7 @@ export class SearchActions {
       payload: {
         results: results.json().data,
       }
-    }
+    };
   }
 
   search(term) {

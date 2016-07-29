@@ -1,10 +1,8 @@
-import { Map, Record } from 'immutable';
+import { Map, Record, List } from 'immutable';
 
-// Allows you to call '.counter' directly instead of having to
-// call .get('counter'). Note that this is still a wrapper around
-// immutable.Map; to mutate you still need to call .set('count');
 export const SearchRecord = Record({
-  results: [],
+  term: '',
+  results: List<any>([]),
   hasError: false,
   isLoading: false,
 });
@@ -12,7 +10,8 @@ export const SearchRecord = Record({
 // Provides strong typing for build-time checking and editor completion on top
 // of the record type above.
 export interface ISearch extends Map<string, any> {
-  results: any[];
+  term: string;
+  results: List<any>;
   hasError: boolean;
   isLoading: boolean;
   set: (prop: string, val: any) => ISearch;
