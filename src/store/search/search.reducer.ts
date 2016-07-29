@@ -11,6 +11,7 @@ export function searchReducer(
   switch (action.type) {
   case SearchActions.SEARCH_SET_TERM:
     return state.merge({
+      page: 0,
       term: action.payload.term,
       results: [],
       hasError: false,
@@ -35,6 +36,11 @@ export function searchReducer(
       results: [],
       hasError: true,
       isLoading: false,
+    });
+
+  case SearchActions.SEARCH_SET_PAGE:
+    return state.merge({
+      page: action.payload.page,
     });
 
   default:
