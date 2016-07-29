@@ -1,5 +1,6 @@
 import { Component, Inject, ApplicationRef } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { select } from 'ng2-redux';
 import { SearchActions } from '../actions';
@@ -26,7 +27,7 @@ import {
         Search: {{term$ | async}}
       </h2>
       <rio-form [group]="group"
-        (onSubmit)="handleSubmit()">
+        (onSubmit)="onSubmit()">
         <rio-form-group
           testid="search-term">
           <rio-input
@@ -55,17 +56,38 @@ export class SearchPage {
   @select(['search', 'term']) term$: Observable<string>;
   private term: FormControl;
   private group: FormGroup;
+  private querySub: any;
 
-  constructor(private actions: SearchActions, private builder: FormBuilder) {
+  constructor(private actions: SearchActions,
+    private builder: FormBuilder,
+    private router: Router) {
     this.term = new FormControl('');
     this.group = this.builder.group({
       term: this.term,
     });
   }
+
   ngOnInit() {
-   // this.actions.search('inside out');
+   this.querySub = this.router
+      .routerState
+      .queryParams
+      .subscribe(params => {
+        let term = params['term'];
+        if (term) {
+          this.actions.setTerm(decodeURIComponent(term));
+        }
+      });
+
+      this.term$.subscribe((term) => {
+        this.router.navigate(['search'], { queryParams: { term } });
+      });
   }
-  handleSubmit() {
-    this.actions.search(this.term.value);
+
+  ngOnDestroy() {
+    this.querySub.unsubscribe();
+  }
+
+  onSubmit() {
+    this.actions.setTerm(this.term.value);
   }
 }

@@ -9,9 +9,15 @@ export function searchReducer(
   action: IPayloadAction): ISearch {
 
   switch (action.type) {
-  case SearchActions.SEARCH_LOADING:
+  case SearchActions.SEARCH_SET_TERM:
     return state.merge({
       term: action.payload.term,
+      results: [],
+      hasError: false,
+      isLoading: false,
+    });
+  case SearchActions.SEARCH_LOADING:
+    return state.merge({
       results: [],
       hasError: false,
       isLoading: true,

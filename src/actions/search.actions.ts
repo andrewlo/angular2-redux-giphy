@@ -8,15 +8,22 @@ export class SearchActions {
   static SEARCH_LOADING = 'SEARCH_LOADING';
   static SEARCH_RESULTS_RECEIVED = 'SEARCH_RESULTS_RECEIVED';
   static SEARCH_ERROR = 'SEARCH_ERROR';
+  static SEARCH_SET_TERM = 'SEARCH_SET_TERM';
 
   constructor(private ngRedux: NgRedux<IAppState>, private http: Http) {}
 
-  loading(term) {
+  term(term) {
     return {
-      type: SearchActions.SEARCH_LOADING,
+      type: SearchActions.SEARCH_SET_TERM,
       payload: {
         term,
       }
+    }
+  }
+
+  loading() {
+    return {
+      type: SearchActions.SEARCH_LOADING,
     };
   }
 
@@ -36,9 +43,18 @@ export class SearchActions {
     };
   }
 
-  search(term) {
-    this.ngRedux.dispatch(this.loading(term));
+  setTerm(term) {
+    if (this.ngRedux.getState().search.get('term') === term) {
+      return;
+    }
+    this.ngRedux.dispatch(this.term(term));
+    this.search();
+  }
 
+  search() {
+    this.ngRedux.dispatch(this.loading());
+
+    let term = this.ngRedux.getState().search.get('term');
     this.http.get(`http://api.giphy.com/v1/gifs/search?q=${term}&api_key=dc6zaTOxFJmzC`)
       .subscribe(
         result => this.ngRedux.dispatch(this.success(result)),
