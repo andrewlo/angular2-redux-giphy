@@ -8,5 +8,6 @@ export interface IPayloadAction extends Action {
   payload?: any;
 }
 
-export const ACTION_PROVIDERS = [ CounterActions, SessionActions, SearchActions ];
+export const ACTION_PROVIDERS = [ CounterActions, SessionActions,
+  SearchActions ];
 export { CounterActions, SessionActions, SearchActions };
