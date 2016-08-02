@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { select } from 'ng2-redux';
 import { SearchActions } from '../actions';
-import { RioContainer, RioForm, RioFormGroup, RioLabel, RioInput, RioButton } from '../components';
+import { RioContainer, RioForm, RioFormGroup, RioLabel, RioInput, RioButton, GifList } from '../components';
 import { ISearch } from '../store';
 import { List } from 'immutable';
 import 'rxjs/add/operator/combineLatest';
@@ -17,15 +17,14 @@ import {
 import { NgRedux } from 'ng2-redux';
 import { IAppState } from '../store';
 
-
 @Component({
   selector: 'search-page',
   providers: [ SearchActions ],
-  directives: [ RioContainer, RioForm, RioFormGroup, RioLabel, RioInput, RioButton ],
+  directives: [ RioContainer, RioForm, RioFormGroup, RioLabel, RioInput, RioButton, GifList ],
   pipes: [ AsyncPipe ],
   template: `
-    <rio-container testid="counter" [size]=2 [center]=true>
-      <h2 data-testid="counter-heading" id="qa-counter-heading"
+    <rio-container testid="search" [size]=4 [center]=true>
+      <h2 data-testid="search-heading"
         class="center caps">
         Search: {{term$ | async}}
       </h2>
@@ -39,7 +38,7 @@ import { IAppState } from '../store';
         (onClick)="nextPage()">
         Next
       </rio-button>
-      <div>Page: {{page$ | async}}</div>
+      <div class="right">Page: {{page$ | async}}</div>
       <rio-form [group]="group"
         (onSubmit)="onSubmit()">
         <rio-form-group
@@ -54,12 +53,7 @@ import { IAppState } from '../store';
         Loading...
       </div>
       <div *ngIf="!(loading$ | async)">
-        <div *ngFor="let result of (results$ | async)">
-          <img src="{{result.getIn(['images', 'downsized', 'url'])}}">
-        </div>
-        <div *ngIf="(results$ | async).size === 0">
-          No results
-        </div>
+        <gif-list [list]="results$ | async" (onClick)="onClickGif($event)"></gif-list>
       </div>
     </rio-container>
   `
@@ -128,5 +122,10 @@ export class SearchPage {
         page: this.ngRedux.getState().search.get('page'),
       }
     });
+  }
+
+  onClickGif(id: number) {
+    console.log('clicked gif ID: ', id);
+    // TODO
   }
 }
