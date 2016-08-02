@@ -13,6 +13,8 @@ import {
   RioLabel,
   RioInput
 } from './form';
+import { GifListItem } from './gif-list-item';
+import { GifList } from './gif-list';
 
 export {
   RioAlert,
@@ -30,5 +32,7 @@ export {
   RioModal,
   RioModalContent,
   RioNavigator,
-  RioNavigatorItem
+  RioNavigatorItem,
+  GifListItem,
+  GifList,
 };
