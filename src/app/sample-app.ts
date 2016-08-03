@@ -10,6 +10,7 @@ import { SessionActions } from '../actions/session.actions';
 import { SessionEpics } from '../epics/session.epics';
 import { RioAboutPage, RioCounterPage } from '../pages';
 import { middleware, enhancers } from '../store';
+import { GiphyService } from '../services/giphy.service';
 
 import {
   RioButton,
@@ -29,7 +30,8 @@ import {
   // Allow app to define global styles.
   encapsulation: ViewEncapsulation.None,
   styles: [ require('../styles/index.css') ],
-  template: require('./sample-app.html')
+  template: require('./sample-app.html'),
+  providers: [ GiphyService ],
 })
 export class RioSampleApp {
   @select(['session', 'hasError']) hasError$: Observable<boolean>;

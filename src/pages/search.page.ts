@@ -63,7 +63,6 @@ export class SearchPage {
   @select(['search', 'isLoading']) loading$: Observable<boolean>;
   @select(['search', 'term']) term$: Observable<string>;
   @select(['search', 'page']) page$: Observable<number>;
-  @select('search') search$: Observable<any>;
 
   private termForm: FormControl;
   private group: FormGroup;
@@ -125,7 +124,8 @@ export class SearchPage {
   }
 
   onClickGif(id: number) {
-    console.log('clicked gif ID: ', id);
-    // TODO
+    this.router.navigate(['gif-details', id], {
+      queryParams: {}
+    });
   }
 }

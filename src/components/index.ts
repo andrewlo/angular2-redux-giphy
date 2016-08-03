@@ -15,6 +15,7 @@ import {
 } from './form';
 import { GifListItem } from './gif-list-item';
 import { GifList } from './gif-list';
+import { GifDetails } from './gif-details';
 
 export {
   RioAlert,
@@ -35,4 +36,5 @@ export {
   RioNavigatorItem,
   GifListItem,
   GifList,
+  GifDetails,
 };

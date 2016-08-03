@@ -3,6 +3,7 @@ import { IAppState, rootReducer, deimmutify, reimmutify } from './store';
 import { ICounter } from './counter';
 import { ISession } from './session';
 import { ISearch } from './search';
+import { IGifDetails } from './gif-details';
 
 const createLogger = require('redux-logger');
 const persistState = require('redux-localstorage');
@@ -13,6 +14,7 @@ export {
   ISession,
   ICounter,
   ISearch,
+  IGifDetails,
   rootReducer,
 };
 
