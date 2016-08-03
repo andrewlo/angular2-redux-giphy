@@ -19,7 +19,4 @@ import {
 })
 export class GifDetails {
   @Input() details: any;
-  ngOnInit() {
-    console.log('details ', this.details);
-  }
 };

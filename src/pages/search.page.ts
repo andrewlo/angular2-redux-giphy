@@ -124,8 +124,6 @@ export class SearchPage {
   }
 
   onClickGif(id: number) {
-    this.router.navigate(['gif-details', id], {
-      queryParams: {}
-    });
+    this.router.navigate(['gif-details', id]);
   }
 }
