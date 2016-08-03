@@ -67,6 +67,7 @@ export class SearchPage {
   private termForm: FormControl;
   private group: FormGroup;
   private querySub: any;
+  private stateSub: any;
 
   constructor(private actions: SearchActions,
     private builder: FormBuilder,
@@ -92,7 +93,7 @@ export class SearchPage {
       });
 
     // Do search & update query params if either search params change
-    this.term$.combineLatest(this.page$).subscribe(n => {
+    this.stateSub = this.term$.combineLatest(this.page$).subscribe(n => {
       this.actions.search();
       this.updateQueryParams();
     });
@@ -100,6 +101,7 @@ export class SearchPage {
 
   ngOnDestroy() {
     this.querySub.unsubscribe();
+    this.stateSub.unsubscribe();
   }
 
   onSubmit() {
