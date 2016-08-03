@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { NgRedux } from 'ng2-redux';
 import { IAppState } from '../store';
+import { GiphyService } from '../services/giphy.service';
 
 @Injectable()
 export class SearchActions {
@@ -11,7 +11,7 @@ export class SearchActions {
   static SEARCH_SET_TERM = 'SEARCH_SET_TERM';
   static SEARCH_SET_PAGE = 'SEARCH_SET_PAGE';
 
-  constructor(private ngRedux: NgRedux<IAppState>, private http: Http) {}
+  constructor(private ngRedux: NgRedux<IAppState>, private giphyService: GiphyService ) {}
 
   setTermAction(term: string) {
     return {
@@ -83,10 +83,8 @@ export class SearchActions {
 
     const term = this.ngRedux.getState().search.get('term');
     const offset = this.ngRedux.getState().search.get('page') * this.ngRedux.getState().search.get('pageSize');
-    const key = 'dc6zaTOxFJmzC';
-    this.http.get(`http://api.giphy.com/v1/gifs/search?q=${term}&offset=${offset}&api_key=${key}`)
-      .subscribe(
-        result => this.ngRedux.dispatch(this.successAction(result)),
-        error => this.ngRedux.dispatch(this.errorAction(error)));
+    this.giphyService.search(term, offset).subscribe(
+      result => this.ngRedux.dispatch(this.successAction(result)),
+      error => this.ngRedux.dispatch(this.errorAction(error)));
   };
 } 
